@@ -9,17 +9,23 @@ A skeleton generated with MEVN stack technologies which can be used as a boilerp
 ## Setup Development Machine
 1. Clone the repo 
 
-2. cd in
+2. cd in MoviesApp
+```
+cd MoviesApp
+
+```
 
 3. Open client
 ```
 cd client
+npm install
 npm run dev
 ```
 
 4. Open server
 ```
 cd server
+npm install
 npm start
 ```
 
