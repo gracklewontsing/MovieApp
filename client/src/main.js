@@ -1,17 +1,26 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
 import router from './router'
-import VueSweetalert2 from 'vue-sweetalert2'
+import store from './store'
+import VueSwal from 'vue-swal';
+import axios from 'axios';
+import moment from 'moment';
+import "bootstrap/dist/css/bootstrap.css";
 
-Vue.use(VueSweetalert2)
+const base = axios.create({
+  baseURL: "http://localhost:8080"
+});
+
+//Vue.use(Moment);
+Vue.prototype.$http = base;
+Vue.use(VueSwal);
 Vue.config.productionTip = false
+Vue.prototype.moment = moment
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
-  template: '<App/>',
-  components: { App }
-})
+  store,
+  render: h => h(App)
+}).$mount('#app')
+
+//

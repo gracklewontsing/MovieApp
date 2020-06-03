@@ -1,28 +1,43 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Posts from '@/components/Posts'
-import addpost from '@/components/AddPost'
-import editpost from '@/components/EditPost'
-
-Vue.use(Router)
-
-export default new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/',
-      name: 'Posts',
-      component: Posts
-    },
-    {
-      path: '/posts/add',
-      component: addpost,
-      name: 'addpost'
-    },
-    {
-      path: '/posts/:id/edit',
-      component: editpost,
-      name: 'editpost'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+Vue.use(VueRouter);
+const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: Home,
+    meta: {
+      requiresAuth: false //true
     }
-  ]
-})
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/login.vue")
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: () => import("../views/register.vue")
+  }
+];
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
+});
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("jwt") == null) {
+      next({
+        path: "/login"
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+export default router;
