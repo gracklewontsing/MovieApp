@@ -1,10 +1,10 @@
 <template>
-<!-- eslint-disable -->
+  <!-- eslint-disable -->
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
+    <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
+      <div class="d-lg-flex d-block flex-row mx-lg-auto mx-0">
         <router-link to="/Home" class="navbar-brand" href="#">
-          <strong class="is-size-4">Wolf&uumlhl</strong>
+          <strong class="">MovieApp</strong>
         </router-link>
         <button
           class="navbar-toggler"
@@ -14,29 +14,29 @@
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
-        >        
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div
-          class="collapse navbar-collapse"
-          id="navbarNav"
-        >        
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <router-link to="/Home" class=" btn btn-light mx-1 navbar-item">Home</router-link>
-              <router-link to="/Fore" class="btn btn-light mx-1 navbar-item">Forecast</router-link>
-            </li>
-          </ul>
-        </div>
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >        
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="btn nav-link" @click="logUserOut">Logout</a>
-            </li>
-          </ul>
+        <div class="collapse navbar-collapse mr-auto" id="navbarNav">
+          <div class="navbar-nav">
+            <router-link to="/Home" class="nav-item nav-link">Home</router-link>
+            <router-link to="/Movies" class="nav-item nav-link"
+              >Movie List</router-link
+            >
+            <router-link to="/Watchlist" class="nav-item nav-link"
+              >Watchlist</router-link
+            >
+            <router-link to="/{user.username}" class="nav-item nav-link"
+              >Profile</router-link
+            >
+            <router-link to="/Friends" class="nav-item nav-link"
+              >Friends</router-link
+            >
+            <form class="form-inline my-2 my-lg-0">
+             <input class="form-control mr-sm-2" type="search" placeholder="Movie" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search a Movie!</button> 
+    </form>
+          </div>          
         </div>
       </div>
     </nav>
@@ -44,11 +44,12 @@
 </template>
 
 <script>
+//add button function
 import VueJwtDecode from "vue-jwt-decode";
 export default {
   name: "Nav",
-  methods:{
-  getUserDetails() {
+  methods: {
+    getUserDetails() {
       let token = localStorage.getItem("jwt");
       let decoded = VueJwtDecode.decode(token);
       this.user = decoded;
@@ -56,21 +57,18 @@ export default {
     logUserOut() {
       localStorage.removeItem("jwt");
       this.$router.push("/");
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
-nav {
-  margin-top: 25px;
-  margin-bottom: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #d88d00;
-    }
-  }
+.navbar .navbar-nav {
+  float: none;
+  vertical-align: top;
+}
+
+.navbar .navbar-collapse {
+  text-align: center;
 }
 </style>
