@@ -3,7 +3,7 @@
   <div>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
       <div class="d-lg-flex d-block flex-row mx-lg-auto mx-0">
-        <router-link to="/Home" class="navbar-brand" href="#">
+        <router-link to="/" class="navbar-brand" href="#">
           <strong class="">MovieApp</strong>
         </router-link>
         <button
@@ -19,7 +19,6 @@
         </button>
         <div class="collapse navbar-collapse mr-auto" id="navbarNav">
           <div class="navbar-nav">
-            <router-link v-if="auth=='loggedin'" to="/Home" class="nav-item nav-link">Home</router-link>
             <router-link v-if="auth=='loggedin'" to="/Watchlist" class="nav-item nav-link"
               >Watchlist</router-link
             >
@@ -30,10 +29,10 @@
               >Friends</router-link
             >
             <router-link v-if="auth==''" class="nav-link" to="/login">Login</router-link>
-            <router-link class="nav-link" to="/register">Register</router-link>
-            <a  v-if="auth=='loggedin'" class="nav-link" href="" v-on:click="logout">Logout</a>
-
-            <vue-simple-suggest 
+            <router-link v-if="auth==''" class="nav-link" to="/register">Register</router-link>
+            <a  v-if="auth=='loggedin'" class="nav-link" href="" v-on:click="logout">Logout</a>             
+            <vue-simple-suggest
+            v-if="auth=='loggedin'" 
             v-model="chosen" 
             display-attribute='Title'
             value-attribute="id" 
@@ -51,7 +50,6 @@
     </nav>
   </div>
 </template>
-
 <script>
 //add button function
 //import VueJwtDecode from "vue-jwt-decode";
