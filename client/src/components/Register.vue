@@ -1,83 +1,59 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1">
-        <form
-          class="text-center border border-primary p-5"
-          style="margin-top:70px;height:auto;padding-top:100px !important;"
-          @submit.prevent="registerUser"
-        >          
-          <input
-            type="text"
-            id="name"
-            class="form-control mb-5"
-            placeholder="Name"
-            v-model="register.name"
-            required
-          />
-          <input
-            type="email"
-            id="email"
-            class="form-control mb-5"
-            placeholder="Email"
-            v-model="register.email"
-            required
-          />
-          <!-- Password -->
-          <input
-            type="password"
-            id="password"
-            class="form-control mb-5"
-            placeholder="Password"
-            v-model="register.password"
-          />
-          <p>
-            <router-link to="/">Login</router-link>
-            <center>
-              <button class="btn btn-primary btn-block w-75 my-4" type="submit">
-                Register
-              </button>
-            </center>
-          </p>
+      <div class="col-md-6 mt-5 mx-auto">
+        <form v-on:submit.prevent="register">
+          <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+          <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" v-model="first_name" class="form-control" name="first_name" placeholder="Enter First Name">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" v-model="last_name" class="form-control" name="last_name" placeholder="Enter Last Name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" v-model="email" class="form-control" name="email" placeholder="Enter Email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" v-model="password" class="form-control" name="password" placeholder="Enter Password">
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
         </form>
       </div>
     </div>
   </div>
 </template>
+
 <script>
+import axios from 'axios'
+import router from '../router'
+
 export default {
-  data() {
+  data () {
     return {
-      register: {
-        name: "",
-        email: "",
-        password: ""
-      }
-    };
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: ''
+    }
   },
+
   methods: {
-    async registerUser() {
-      try {
-        let response = await this.$http.post("/user/register", this.register);
-        console.log(response);
-        let token = response.data.token;
-        if (token) {
-          localStorage.setItem("jwt", token);
-          this.$router.push("/");
-          this.$swal("Success", "Registration successful", "success");
-        } else {
-          this.$swal("Error", "Something went wrong, please try again later.", "error");
-        }
-      } catch (err) {
-        console.log(err);
-        let error = err.response;
-        if (error.status == 409) {
-          this.$swal("Error", error.data.message, "error");
-        } else {
-          this.$swal("Error", error.data.err.message, "error");
-        }
-      }
+    register () {
+      axios.post('http://localhost:3000/users/register', {
+        first_name: this.first_name,
+        last_name: this.last_name,
+        email: this.email,
+        password: this.password
+      }).then(() => {
+        router.push({ name: 'Login' })
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
-};
+}
 </script>

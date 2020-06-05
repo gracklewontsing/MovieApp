@@ -16,6 +16,9 @@ app.use(express.json());
 app.use(cors({origin: 'http://localhost:8080'}));
 
 //Routes
+var Users = require("../routes/user.route");
+
+app.use("/users", Users)
 
 //Start server
 app.listen(3000, () => {
