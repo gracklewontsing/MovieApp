@@ -17,6 +17,7 @@ Vue.use(VueSwal);
 Vue.config.productionTip = false
 Vue.prototype.moment = moment
 
+
 new Vue({
   router,
   store,
