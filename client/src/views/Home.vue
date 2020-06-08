@@ -4,10 +4,10 @@
   </div>
 </template>
 <script>
-import HelloWorld from '../components/HelloWorld'
+import MovieAppHome from '../components/MovieAppHome'
 export default {
   components:{
-    HelloWorld
+    MovieAppHome
   }
 }
 </script>
