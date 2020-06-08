@@ -6,10 +6,12 @@ import Register from '@/views/register';
 import User from '@/components/User';
 import Friendslist from '@/components/Friendslist';
 import Watchlist from '@/components/Watchlist';
+import VueJwtDecode from 'vue-jwt-decode'
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
+
   routes: [
     {
       path: '/',
@@ -19,27 +21,69 @@ export default new Router({
     {
       path: '/user',
       name: 'User',
-      component: User
+      component: User,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/friends',
       name: 'Friends',
-      component: Friendslist
+      component: Friendslist,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/watchlist',
       name: 'Watchlist',
-      component: Watchlist
+      component: Watchlist,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        guest: true
+      }
     },
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: Register,
+      meta: {
+        guest: true
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+      if (localStorage.getItem('usertoken') == null) {
+          next({
+              path: '/login',
+              params: { nextUrl: to.fullPath }
+          })
+      } else {
+        let token = localStorage.getItem("usertoken");
+        if (token) {
+          let decoded = VueJwtDecode.decode(token);
+          let user = decoded;
+
+          if(user) next()
+        }  
+      }
+  } else if(to.matched.some(record => record.meta.guest)) {
+      if(localStorage.getItem('usertoken') == null){
+          next()
+      }
+  }else {
+      next()
+  }
+})
+
+export default router;
