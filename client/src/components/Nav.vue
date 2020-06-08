@@ -34,7 +34,7 @@
             v-if="auth=='loggedin'"
             v-model="chosen" 
             display-attribute='Title'
-            value-attribute="id" 
+            value-attribute="imdbID" 
             @select="redirect" 
             :destyled=true :styles="suggest" 
             :list="query" 
@@ -86,7 +86,7 @@ export default {
       // empty, just to avoid warnings
     },
     query(value){            
-      return axios.get(`http://www.omdbapi.com/?s=${value}&apikey=31b52ae1`).then((res)=> {return res.data.Search});      
+      return axios.get(`http://www.omdbapi.com/?s=${value}&apikey=31b52ae1`).then((res)=> res.data.Search);      
     },
     redirect(value){
       console.log(value);
