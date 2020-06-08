@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container my-5">
         <div class="row">
             <div class="col-md-6 mt-5 mx-auto">
                 <form v-on:submit.prevent="login">

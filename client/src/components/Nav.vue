@@ -1,38 +1,37 @@
 <template>
   <!-- eslint-disable -->
   <div>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-      <div class="d-lg-flex d-block flex-row mx-lg-auto mx-0">
+    <b-navbar toggleable="lg" class="navbar fixed-top navbar-dark bg-dark">      
+      <div class="container justify-content-center">
         <router-link to="/" class="navbar-brand" href="#">
           <strong class="">MovieApp</strong>
         </router-link>
-        <button
+        <b-navbar-toggle
           class="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
+          target="navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse mr-auto" id="navbarNav">
-          <div class="navbar-nav">
-            <router-link v-if="auth=='loggedin'" to="/Watchlist" class="nav-item nav-link"
+        </b-navbar-toggle>
+        <b-collapse class="mr-auto" id="navbarNav" is-nav>
+          <b-navbar-nav class="mx-auto">            
+            <router-link v-if="auth=='loggedin'" to="/watchlist" class="nav-item nav-link"
               >Watchlist</router-link
             >
-            <router-link v-if="auth=='loggedin'" to="/{user.username}" class="nav-item nav-link"
-              >Profile</router-link
+            <router-link v-if="auth=='loggedin'" to="/user" class="nav-item nav-link"
+              >{{user.first_name}}'s Profile</router-link
             >
-            <router-link v-if="auth=='loggedin'" to="/Friends" class="nav-item nav-link"
+            <router-link v-if="auth=='loggedin'" to="/friends" class="nav-item nav-link"
               >Friends</router-link
             >
             <router-link v-if="auth==''" class="nav-link" to="/login">Login</router-link>
             <router-link v-if="auth==''" class="nav-link" to="/register">Register</router-link>
             <a  v-if="auth=='loggedin'" class="nav-link" href="" v-on:click="logout">Logout</a>             
             <vue-simple-suggest
-            v-if="auth=='loggedin'" 
+            v-if="auth=='loggedin'"
             v-model="chosen" 
             display-attribute='Title'
             value-attribute="id" 
@@ -44,23 +43,23 @@
             :debounce="200"
             :filter-by-query="false"
            />
-          </div>          
-        </div>
-      </div>
-    </nav>
+          </b-navbar-nav>          
+        </b-collapse>    
+      </div>  
+    </b-navbar>
   </div>
 </template>
 <script>
 //add button function
-//import VueJwtDecode from "vue-jwt-decode";
+
 import axios from "axios";
 import VueSimpleSuggest from 'vue-simple-suggest'
 import EventBus from './EventBus'
+import VueJwtDecode from 'vue-jwt-decode'
 
 EventBus.$on('logged-in', test => {
   console.log(test)
 })
-
 
 export default {
   name: "Nav",
@@ -82,13 +81,7 @@ export default {
     VueSimpleSuggest
   },
   methods: {
-    getUserDetails() {
-    /*
-      let token = localStorage.getItem("jwt");
-      let decoded = VueJwtDecode.decode(token);
-      this.user = decoded;
-      */
-    },
+    
     logout() {
       localStorage.removeItem('usertoken');
     },    
@@ -105,7 +98,10 @@ export default {
   },
   mounted () {
     EventBus.$on('logged-in', status => {
-      this.auth = status
+      let token = localStorage.getItem("usertoken");
+      let decoded = VueJwtDecode.decode(token);
+      this.user = decoded;      
+      this.auth = status      
     })
   },
   watch:{
