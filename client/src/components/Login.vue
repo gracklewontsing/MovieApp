@@ -38,14 +38,18 @@ export default {
         email: this.email,
         password: this.password
       }).then(res => {
+        if (res.data.error) {
+          console.log(res.data.error);
+          return ;
+        }
         localStorage.setItem('usertoken', res.data);
         this.email = '';
         this.password = '';
+        this.emitMethod()
         router.push({ name: 'Home' });
       }).catch(err => {
-        console.log(err)
+        console.log(err);
       })
-      this.emitMethod()
     },
     emitMethod () {
       EventBus.$emit('logged-in', 'loggedin');

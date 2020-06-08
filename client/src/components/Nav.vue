@@ -57,11 +57,8 @@ import VueSimpleSuggest from 'vue-simple-suggest'
 import EventBus from './EventBus'
 import VueJwtDecode from 'vue-jwt-decode'
 
-EventBus.$on('logged-in', test => {
-  console.log(test)
-})
-
 export default {
+  props: ['logged'],
   name: "Nav",
   data () {
     return {
@@ -97,12 +94,23 @@ export default {
     }
   },
   mounted () {
-    EventBus.$on('logged-in', status => {
+    EventBus.$on('logged-in', status => { 
+      this.auth = status;
+      if (this.auth === "loggedin"){
       let token = localStorage.getItem("usertoken");
-      let decoded = VueJwtDecode.decode(token);
-      this.user = decoded;      
-      this.auth = status      
+      if (token) {
+        let decoded = VueJwtDecode.decode(token);
+        this.user = decoded;    
+      }  
+    }
     })
+    
+    
+    let token = localStorage.getItem("usertoken");
+    if (token) {
+      EventBus.$emit('logged-in', 'loggedin'); 
+    }  
+    
   },
   watch:{
     
