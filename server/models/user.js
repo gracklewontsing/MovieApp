@@ -19,6 +19,14 @@ const UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    friendlist : { 
+        type : Array ,
+        default : []
+    },
+    watchlist_id : { 
+        type : String ,
+        required : true
     }
 })
 

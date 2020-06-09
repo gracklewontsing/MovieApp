@@ -56,9 +56,9 @@ import axios from "axios";
 import VueSimpleSuggest from 'vue-simple-suggest'
 import EventBus from './EventBus'
 import VueJwtDecode from 'vue-jwt-decode'
+import router from '../router'
 
 export default {
-  props: ['logged'],
   name: "Nav",
   data () {
     return {
@@ -89,9 +89,10 @@ export default {
       return axios.get(`http://www.omdbapi.com/?s=${value}&apikey=31b52ae1`).then((res)=> res.data.Search);      
     },
     redirect(value){
-      console.log(value);
-      this.$router.push(`movie/${value.imdbID}`);
+      //console.log(value);
+      router.push({ name: 'Movie', params: { movieId: value.imdbID } });
     }
+
   },
   mounted () {
     EventBus.$on('logged-in', status => { 

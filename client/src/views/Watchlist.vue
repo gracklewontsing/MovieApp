@@ -1,13 +1,13 @@
 <template>
   <div>
-    <MovieAppHome/>    
+    <Watchlist/>    
   </div>
 </template>
 <script>
-import MovieAppHome from '../components/MovieAppHome'
+import Watchlist from '../components/Watchlist'
 export default {
   components:{
-    MovieAppHome
+    Watchlist
   }
 }
 </script>

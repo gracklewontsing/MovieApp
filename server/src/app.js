@@ -17,8 +17,9 @@ app.use(cors({origin: 'http://localhost:8080'}));
 
 //Routes
 var Users = require("../routes/user.route");
-
+var Watchlist = require("../routes/watchlist.route");
 app.use("/users", Users)
+app.use("/watchlist", Watchlist)
 
 //Start server
 app.listen(3000, () => {

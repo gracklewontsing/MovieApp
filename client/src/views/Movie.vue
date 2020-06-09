@@ -1,13 +1,13 @@
 <template>
   <div>
-    <MovieAppHome/>    
+    <MovieDescription/>    
   </div>
 </template>
 <script>
-import MovieAppHome from '../components/MovieAppHome'
+import MovieDescription from '../components/MovieDescritpion'
 export default {
   components:{
-    MovieAppHome
+    MovieDescription
   }
 }
 </script>
