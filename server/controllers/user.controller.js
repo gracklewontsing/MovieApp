@@ -117,7 +117,7 @@ userCtrl.findFriends = async (req, res) => {
   User.findOne({ email: req.params.email })
     .then((user) => {
       if(!user) {
-        res.json({ error: "User does not exist" });
+        res.json([]);
       }
       let userDetail = {
         id: user._id,
