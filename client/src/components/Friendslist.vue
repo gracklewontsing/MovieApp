@@ -2,7 +2,7 @@
     <div class="underNav">        
         <vue-simple-suggest
             @input = "searchUserByEmail()"
-            v-model="search.text"
+            v-model="search"
             type="text"
             placeholder="Search a user by his email adress..."
             display-attribute='email'
@@ -39,8 +39,10 @@ export default {
 name: "Friendslist",
   data() {
     return {
-      friendslist: [],
-      suggest:{
+        search: '',
+        friendslist: [],
+        users: [],
+        suggest:{
         vueSimpleSuggest: "position-relative",
           inputWrapper: "",
           defaultInput : "form-control",
@@ -58,10 +60,7 @@ name: "Friendslist",
       axios
         .get(`http://localhost:3000/friendslist/FriendslistItems/${this.user_id}`)
         .then(res => {
-          //console.log(res.data);
-          for (let userId in res.data) {
-            this.fetchUser(res.data[userId]);
-          }
+            this.friendslist = res.data
         })
         .catch(err => {
           console.log(err);
@@ -74,11 +73,13 @@ name: "Friendslist",
         this.user_id = decoded._id;
       }
     },
-    fetchUser(userId) {
-      return axios
-        .get(`http://www.omdbapi.com/?i=${userId}&apikey=31b52ae1`)
-        .then(res => {
-          this.friendslist.push(res.data);
+    searchUserByEmail(){
+        axios.get(`http://localhost:3000/users/email/${this.search}`)
+        .then(res => {         
+          this.users= res.data.email;
+        })
+        .catch(err => {
+          console.log(err);
         });
     }
   },
