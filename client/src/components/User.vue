@@ -1,7 +1,11 @@
 <template>
     <div class="container my-5">
-        <b-container class="col-lg-12">
-            
+        <b-container class="my-2 col-lg-12">
+            <h1>User's data</h1>
+            <h4>{{user.first_name}}</h4>
+            <h4>{{user.last_name}}</h4>
+            <h4>{{user.email}}</h4>
+            <h4></h4>
         </b-container>
     </div>
 </template>
@@ -11,18 +15,18 @@
 import VueJwtDecode from "vue-jwt-decode";
 
 export default {
-    methods: {    
-        extractUser() {
-        let token = localStorage.getItem("usertoken");
-        if (token) {
-            let decoded = VueJwtDecode.decode(token);
-            this.user_id = decoded._id;
+    data() {
+        return {
+            user: '',
         }
-        },
-        mounted()
-        {       
-            this.extractUser();
-        }
-    }
+    }, 
+    mounted()
+    {       
+      let token = localStorage.getItem("usertoken");
+      if (token) {
+        let decoded = VueJwtDecode.decode(token);
+        this.user = decoded;    
+      }
+    }  
 }
 </script>
