@@ -4,7 +4,7 @@ import Home from "../views/Home";
 import Login from "../views/login";
 import Register from "@/views/register";
 import User from "@/components/User";
-import Friendslist from "@/components/Friendslist";
+import Friends from "@/views/Friends";
 import Watchlist from "@/components/Watchlist";
 import Movie from "../views/Movie";
 import VueJwtDecode from "vue-jwt-decode";
@@ -29,7 +29,7 @@ let router = new Router({
     {
       path: "/friends",
       name: "Friends",
-      component: Friendslist,
+      component: Friends,
       meta: {
         requiresAuth: true,
       },
