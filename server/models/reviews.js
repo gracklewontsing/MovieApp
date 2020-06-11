@@ -13,9 +13,9 @@ const ReviewSchema = new Schema({
         type: String,
         required: true
     },
-    review : { 
-        type : Array ,
-        default : []
+    review: { 
+        type : String ,
+        default : ""
     }
 })
 

@@ -5,13 +5,13 @@ const cors = require("cors");
 const reviewCtrl = {};
 
 const User = require("../models/user");
-const Review = require("../models/review");
+const Review = require("../models/reviews");
 reviewRotuer.use(cors());
 
 reviewCtrl.addReviewToMovie = async (req, res) => {
-  const userId = req.params.movieId;
+  const movieId = req.params.movieId;
   const rating = req.body.rating;
-  const movieId = req.body.userId;
+  const userId = req.body.userId;
   const review = req.body.review;
   //console.log(req.params.movieId);
   //console.log(movieId);
@@ -41,4 +41,4 @@ reviewCtrl.getReviewsByMovie = async (req, res) => {
     });
 };
 
-module.exports = watchlistCtrl;
+module.exports = reviewCtrl;
