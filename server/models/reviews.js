@@ -9,6 +9,10 @@ const ReviewSchema = new Schema({
         type: String,
         required: true
     },
+    movie_id: {
+        type: String,
+        required: true
+    },
     review : { 
         type : Array ,
         default : []
