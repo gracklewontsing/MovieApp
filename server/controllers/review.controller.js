@@ -17,7 +17,7 @@ reviewCtrl.addReviewToMovie = async (req, res) => {
   //console.log(movieId);
   let reviewData = {
     rating: rating,
-    user_id = userId,
+    user_id: userId,
     movie_id: movieId,
     review: review
   }
