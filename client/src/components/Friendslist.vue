@@ -5,7 +5,7 @@
             v-model="search"
             type="text"
             placeholder="Search a user by his email adress..."
-            display-attribute='email'
+            display-attribute='first_name'
             value-attribute="id" 
             @select="request" 
             :destyled=true :styles="suggest" 
